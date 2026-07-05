@@ -1,0 +1,20 @@
+[package]
+name = "box_delivery"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { version = "0.19.0", features = ["3d", "dynamic_linking"] }
+avian3d = "0.7"
+
+[[bin]]
+name="box_delivery"
+path="src/main.rs"
+
+# Enable a small amount of optimization in the dev profile.
+[profile.dev]
+opt-level = 1
+
+# Enable a large amount of optimization in the dev profile for dependencies.
+[profile.dev.package."*"]
+opt-level = 3
