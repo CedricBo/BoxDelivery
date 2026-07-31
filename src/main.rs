@@ -1,14 +1,9 @@
-use avian3d::{PhysicsPlugins, debug_render::PhysicsDebugPlugin};
+use avian3d::{PhysicsPlugins, debug_render::PhysicsDebugPlugin, interpolation::PhysicsInterpolationPlugin};
 use bevy::{
-    DefaultPlugins,
-    app::{Startup, Update},
-    ecs::{
+    DefaultPlugins, app::{PluginGroup, PostUpdate, Startup, Update}, ecs::{
         query::With,
         system::{Local, Res, Single},
-    },
-    input::{ButtonInput, keyboard::KeyCode},
-    render::view::window,
-    window::{CursorOptions, PrimaryWindow, Window},
+    }, input::{ButtonInput, keyboard::KeyCode}, render::view::window, window::{CursorOptions, PrimaryWindow, Window},
 };
 
 use crate::{camera::CameraPlugin, player::plugin::PlayerPlugin, world::plugin::WorldPlugin};
