@@ -1,10 +1,12 @@
-use avian3d::{collision::collider::Collider, dynamics::rigid_body::RigidBody, interpolation::TransformInterpolation};
+use avian3d::{
+    collision::collider::Collider, dynamics::rigid_body::RigidBody,
+};
 use bevy::prelude::*;
 
 pub struct WorldPlugin;
 
 #[derive(Component)]
-pub struct Box; 
+pub struct Box;
 
 impl Plugin for WorldPlugin {
     fn build(&self, app: &mut bevy::app::App) {
@@ -29,7 +31,7 @@ fn init_world(
         Mesh3d(mesh_handle),
         Collider::convex_hull_from_mesh(&mesh).unwrap(),
         RigidBody::Static,
-        Transform::from_translation(-Vec3::Y * 20.0)
+        Transform::from_translation(-Vec3::Y * 20.0),
     ));
 
     let cube = Mesh::from(Cuboid::new(5.0, 5.0, 5.0));

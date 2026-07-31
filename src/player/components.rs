@@ -1,4 +1,4 @@
-use bevy::{ecs::{bundle::Bundle, component::Component}, transform::components::Transform};
+use bevy::{ecs::component::Component, transform::components::Transform};
 
 #[derive(Component)]
 #[require(Transform = Transform::default())]
