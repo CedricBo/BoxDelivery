@@ -1,7 +1,11 @@
 use avian3d::{
+    collision::collider::ColliderDisabled,
     dynamics::{
-        joints::FixedJoint, rigid_body::{RigidBody, sleeping::SleepingDisabled},
-    }, physics_transform::{Position, Rotation}, spatial_query::{SpatialQuery, SpatialQueryFilter},
+        joints::FixedJoint,
+        rigid_body::{RigidBody, sleeping::SleepingDisabled},
+    },
+    physics_transform::{Position, Rotation},
+    spatial_query::{SpatialQuery, SpatialQueryFilter},
 };
 use bevy::{input::mouse::MouseMotion, prelude::*};
 
@@ -19,8 +23,8 @@ impl Plugin for PlayerPlugin {
         app.add_systems(
             FixedUpdate,
             (
-                (player_control)/* .before(TransformSystems::Propagate) */,
-                camera_follow_player/* .after(TransformSystems::Propagate) */,
+                (player_control),     /* .before(TransformSystems::Propagate) */
+                camera_follow_player, /* .after(TransformSystems::Propagate) */
             ),
         );
     }
@@ -68,8 +72,7 @@ fn player_control(
         }
     });
 
-    if dir != Vec3::ZERO
-    {
+    if dir != Vec3::ZERO {
         println!("Dir: {:?}", dir);
 
         player_transform.0.translation += dir.normalize() / 3.0;
@@ -118,8 +121,10 @@ fn grab_raycast(
 ) {
     if mouse_buttons.just_pressed(MouseButton::Left) {
         if let Some(grabbed) = grabbed {
-
-            commands.entity(grabbed.0).remove::<Grabbed>();
+            commands
+                .entity(grabbed.0)
+                .remove::<Grabbed>()
+                .remove::<ColliderDisabled>();
             commands.entity(joint.unwrap().into_inner()).despawn();
         } else {
             let filter = SpatialQueryFilter::default();
@@ -140,6 +145,7 @@ fn grab_raycast(
                 );
 
                 commands.entity(hit.entity).insert(Grabbed);
+                commands.entity(hit.entity).insert(ColliderDisabled);
             }
         }
     }

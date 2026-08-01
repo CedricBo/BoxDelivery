@@ -1,9 +1,9 @@
-use avian3d::{PhysicsPlugins, debug_render::PhysicsDebugPlugin};
+use avian3d::{PhysicsPlugins, debug_render::PhysicsDebugPlugin, dynamics::integrator::Gravity};
 use bevy::{
     DefaultPlugins, app::Update, ecs::{
         query::With,
         system::{Local, Res, Single},
-    }, input::{ButtonInput, keyboard::KeyCode}, window::{CursorOptions, PrimaryWindow, Window},
+    }, input::{ButtonInput, keyboard::KeyCode}, math::Vec3, window::{CursorOptions, PrimaryWindow, Window},
 };
 
 use crate::{camera::CameraPlugin, player::plugin::PlayerPlugin, world::plugin::WorldPlugin};
@@ -23,6 +23,8 @@ fn main() {
         PhysicsPlugins::default(),
         PhysicsDebugPlugin,
     ));
+
+    app.insert_resource(Gravity(Vec3::NEG_Y * 31.2));
 
     app.add_systems(Update, lock_cursor);
 
